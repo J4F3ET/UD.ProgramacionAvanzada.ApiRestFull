@@ -48,7 +48,6 @@ public class TareaServicio {
         tareaToUpdate.get().setNombre(request.getNombre());
         tareaToUpdate.get().setDescripcion(request.getDescripcion());
         tareaToUpdate.get().setEstado(request.getEstado());
-        tareaToUpdate.get().setFechaCreacion(request.getFechaCreacion());
         tareaToUpdate.get().setFechaFinalizacion(request.getFechaFinalizacion());
         tareaRepository.save(tareaToUpdate.get());
         return tareaToUpdate;

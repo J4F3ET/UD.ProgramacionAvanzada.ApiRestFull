@@ -35,19 +35,19 @@ public class TareaCTO {
 
     @PostMapping
     public TareaDTO test(@RequestBody TareaDTO tarea){
-        SimpleDateFormat DateFor = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat DateFor = new SimpleDateFormat("yyyy-MM-dd");
         tarea.setEstado("Pendiente");
         tarea.setFechaCreacion(DateFor.format(new Date()));
         return tareaServicio.saveTarea(tarea);
     }
 
-    @PutMapping( path = "/{id}")
-    public Optional<TareaDTO> updateTaskById(@RequestBody TareaDTO request, @PathVariable("id") long id){
-        return tareaServicio.updateTareaById(request, id);
+    @PutMapping
+    public Optional<TareaDTO> updateTaskById(@RequestBody TareaDTO request){
+        return tareaServicio.updateTareaById(request, request.getId());
     }
 
     @DeleteMapping( path = "/{id}")
-    public boolean deleteTaskById(@RequestBody long id){
+    public boolean deleteTaskById(@PathVariable long id){
         return tareaServicio.deleteTareaById(id);
     }
 
