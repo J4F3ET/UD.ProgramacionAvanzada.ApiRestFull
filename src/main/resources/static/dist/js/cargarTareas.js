@@ -16,7 +16,17 @@ $.ajax({
 	},
 });
 document.querySelector("#btnFiltrarHoy").addEventListener("click", () => {
-	filtrarTareas();
+	document.querySelector("#tituloFiltro").innerHTML = "Tareas para hoy";
+	filtrarTareas('hoy');
+});
+document.querySelector("#btnTodasTareas").addEventListener("click", () => {
+	document.querySelector("#tituloFiltro").innerHTML = "Todas las tareas";
+	resetTabla();
+	
+});
+document.querySelector("#btnFiltrarPlanes").addEventListener("click", () => {
+	document.querySelector("#tituloFiltro").innerHTML = "Tareas en planes";
+	filtrarTareas('planes');
 });
 function agregarTareas(tareas) {
 	tareas.forEach((tarea) => {
@@ -188,17 +198,29 @@ function cambiarEstadoTarea() {
 		});
 	});
 }
-function borrarTabla(){
-	var table = document.querySelector("#tablaTareas");
-	var rowCount = table.rows.length;
-	for (var x = rowCount - 1; x > 0; x--) {
-		table.deleteRow(x);
-	}
+function resetTabla(){
+	tuplas = document.querySelectorAll(".tuplaTarea");
+	tuplas.forEach((tupla) => {
+		tupla.hidden = false;
+	});
 }
-function filtrarTareas(){
+function filtrarTareas(f){
 	const fechaHoy = new Date().toISOString().split('T')[0];
 	var tuplas = document.querySelectorAll(".tuplaTarea");
-	tuplas.forEach((tupla) => {
-		tupla.querySelector(".spanFechaFinalizacion").innerHTML == fechaHoy? tupla.hidden = false : tupla.hidden = true;
-	});
+	resetTabla();
+	if(f == "planes"){
+		tuplas.forEach((tupla) => {
+			tupla.querySelector(".spanFechaFinalizacion").innerHTML != fechaHoy &&
+			tupla.querySelector(".btnEstadoTarea").innerHTML == "Pendiente"
+				? (tupla.hidden = false)
+				: (tupla.hidden = true);
+		});
+	}else{
+		tuplas.forEach((tupla) => {
+			tupla.querySelector(".spanFechaFinalizacion").innerHTML == fechaHoy &&
+			tupla.querySelector(".btnEstadoTarea").innerHTML == "Pendiente"
+				? (tupla.hidden = false)
+				: (tupla.hidden = true);	
+		});
+	}
 };

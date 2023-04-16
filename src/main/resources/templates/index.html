@@ -38,7 +38,7 @@
       <ul class="navbar-nav ml-auto">
         <!-- Navbar Search -->
         <li class="nav-item">
-          <a class="nav-link" data-widget="navbar-search" href="#" role="button">
+          <a class="nav-link" data-widget="navbar-search"role="button">
             <i class="fas fa-search"></i>
           </a>
           <div class="navbar-search-block">
@@ -83,6 +83,14 @@
               </a>
             </li>
             <li class="nav-item">
+              <a id="btnTodasTareas" class="nav-link">
+                <i class="nav-icon fa fa-globe"></i>
+                <p>
+                  Todas
+                </p>
+              </a>
+            </li>
+            <li class="nav-item">
               <a id="btnFiltrarHoy" class="nav-link">
                 <i class="nav-icon fa fa-bookmark"></i>
                 <p>
@@ -91,32 +99,12 @@
               </a>
             </li>
             <li class="nav-item">
-              <a href="#" class="nav-link">
+              <a id="btnFiltrarPlanes" class="nav-link">
                 <i class="nav-icon fas fa-table"></i>
                 <p>
                   Planes
                 </p>
               </a>
-              <ul class="nav nav-treeview">
-                <li class="nav-item">
-                  <a href="pages/tables/simple.html" class="nav-link">
-                    <i class="far fa-circle nav-icon"></i>
-                    <p>Simple Tables</p>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a href="pages/tables/data.html" class="nav-link">
-                    <i class="far fa-circle nav-icon"></i>
-                    <p>DataTables</p>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a href="pages/tables/jsgrid.html" class="nav-link">
-                    <i class="far fa-circle nav-icon"></i>
-                    <p>jsGrid</p>
-                  </a>
-                </li>
-              </ul>
             </li>
           </ul>
         </nav>
@@ -149,7 +137,7 @@
       <div class=" col-md-12">
               <div class="card">
                 <div class="card-header">
-                  <h3 class="card-title">Todas</h3>
+                  <h3 id="tituloFiltro" class="card-title">Todas</h3>
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
