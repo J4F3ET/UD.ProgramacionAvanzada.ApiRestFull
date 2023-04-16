@@ -38,7 +38,7 @@ public class TareaCTO {
 
     @PatchMapping( path = "/{id}")
     public Optional<TareaDTO> updateTaskById(@PathVariable("id") long id, @RequestBody TareaDTO request){
-        return tareaServicio.updateTareaById(request, id);
+        return tareaServicio.updateTareaEstadoById(request, id);
     }
 
     @PostMapping

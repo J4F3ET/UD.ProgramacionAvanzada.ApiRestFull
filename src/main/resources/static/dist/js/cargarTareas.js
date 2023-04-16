@@ -7,14 +7,18 @@ $.ajax({
 	async: true,
 	success: (response) => {
 		tareas.push(...response);
-		agregarTareas();
+		agregarTareas(tareas);
 		eliminarTarea();
+		cambiarEstadoTarea();
 	},
 	error: () => {
 		alert("Error al guardar la tarea");
 	},
 });
-function agregarTareas() {
+document.querySelector("#btnFiltrarHoy").addEventListener("click", () => {
+	filtrarTareas();
+});
+function agregarTareas(tareas) {
 	tareas.forEach((tarea) => {
 		document.querySelector("#tablaTareas").appendChild(crearTarea(tarea));
 	});
@@ -29,6 +33,7 @@ function agregarTareas() {
 }
 function crearTarea(tarea) {
 	var tupla = document.createElement("tr");
+	tupla.classList.add("tuplaTarea");
 
 	var celda1 = document.createElement("td");
 	celda1.innerHTML = tarea.id;
@@ -63,15 +68,14 @@ function crearTarea(tarea) {
 
 	var celda5 = document.createElement("td");
 	var spanC5 = document.createElement("span");
+	spanC5.classList.add("spanFechaFinalizacion");
 	spanC5.innerHTML = tarea.fechaFinalizacion;
 	celda5.appendChild(spanC5);
 
 	var celda6 = document.createElement("td");
 	var buttonC6 = document.createElement("button");
 	buttonC6.setAttribute("data-task-id", tarea.id);
-	console.log(buttonC6);
 	buttonC6.classList.add("btnEstadoTarea");
-	console.log(buttonC6);
 	buttonC6.classList.add("btn");
 	dias <= 0
 		? buttonC6.classList.add("bg-olive")
@@ -81,7 +85,6 @@ function crearTarea(tarea) {
 		buttonC6.classList.remove("bg-olive");
 		buttonC6.classList.add("btn-danger");
 	}
-	console.log(tarea.estado);
 	buttonC6.innerHTML = tarea.estado;
 	celda6.appendChild(buttonC6);
 
@@ -185,3 +188,17 @@ function cambiarEstadoTarea() {
 		});
 	});
 }
+function borrarTabla(){
+	var table = document.querySelector("#tablaTareas");
+	var rowCount = table.rows.length;
+	for (var x = rowCount - 1; x > 0; x--) {
+		table.deleteRow(x);
+	}
+}
+function filtrarTareas(){
+	const fechaHoy = new Date().toISOString().split('T')[0];
+	var tuplas = document.querySelectorAll(".tuplaTarea");
+	tuplas.forEach((tupla) => {
+		tupla.querySelector(".spanFechaFinalizacion").innerHTML == fechaHoy? tupla.hidden = false : tupla.hidden = true;
+	});
+};
