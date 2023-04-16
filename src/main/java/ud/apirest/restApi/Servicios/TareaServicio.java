@@ -52,7 +52,20 @@ public class TareaServicio {
         tareaRepository.save(tareaToUpdate.get());
         return tareaToUpdate;
     }
-    
+    /**
+     * @param request la tarea nueva
+     * @param id el id de la tarea a actualizar
+     * @return la tarea actualizada
+     * La funcion actualiza la tarea con el id especificado, para cambiar el estado de la tarea (metodo PATCH)
+     */
+    public Optional<TareaDTO> updateTareaEstadoById(TareaDTO request, long id){
+        Optional<TareaDTO> tareaToUpdate = tareaRepository.findById(id);
+        if(!tareaToUpdate.isPresent())
+            return null;
+        tareaToUpdate.get().setEstado(request.getEstado());
+        tareaRepository.save(tareaToUpdate.get());
+        return tareaToUpdate;
+    }
     /**
      * @param id el id de la tarea a eliminar
      * @return true si la tarea fue eliminada, false si no

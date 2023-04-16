@@ -1,5 +1,15 @@
 document.querySelector(".btnCerrarModal").addEventListener("click", () =>cerrarModal());
-document.querySelector("#btnModificarTarea").addEventListener("click", () => modificarModal());
+document.querySelector("#btnModificarTarea").addEventListener("click", () => {
+	modificarModal()
+	Swal.fire({
+		position: "top-end",
+		icon: "success",
+		title: "Modifique los campos que desee",
+		showConfirmButton: false,
+		timer: 2000,
+		timerProgressBar: true,
+	})
+});
 document.querySelector("#btnActualizarTarea").addEventListener("click", () => {
 	$.ajax({
 		url: "http://localhost:8080/task",

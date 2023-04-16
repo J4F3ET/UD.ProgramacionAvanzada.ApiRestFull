@@ -11,11 +11,11 @@ $.ajax({
 		eliminarTarea();
 	},
 	error: () => {
-		alert("Error al guardar la tarea")
+		alert("Error al guardar la tarea");
 	},
 });
-function agregarTareas(){
-	tareas.forEach(tarea => {
+function agregarTareas() {
+	tareas.forEach((tarea) => {
 		document.querySelector("#tablaTareas").appendChild(crearTarea(tarea));
 	});
 	document.querySelectorAll(".btnModificarTarea").forEach((btn) => {
@@ -27,11 +27,11 @@ function agregarTareas(){
 		});
 	});
 }
-function crearTarea(tarea){
+function crearTarea(tarea) {
 	var tupla = document.createElement("tr");
 
 	var celda1 = document.createElement("td");
-	celda1.innerHTML= tarea.id
+	celda1.innerHTML = tarea.id;
 
 	var celda2 = document.createElement("td");
 	var buttonC2 = document.createElement("button");
@@ -52,9 +52,11 @@ function crearTarea(tarea){
 	var spanC4 = document.createElement("span");
 	fechaCreacion = new Date(tarea.fechaCreacion);
 	fechaFinalizacion = new Date(tarea.fechaFinalizacion);
-	var dias = Math.round((fechaFinalizacion - fechaCreacion) / (1000 * 60 * 60 * 24));
-	dias <= 0 
-		? spanC4.setAttribute("class", "badge bg-success") 
+	var dias = Math.round(
+		(fechaFinalizacion - fechaCreacion) / (1000 * 60 * 60 * 24)
+	);
+	dias <= 0
+		? spanC4.setAttribute("class", "badge bg-success")
 		: spanC4.setAttribute("class", "badge bg-warning");
 	spanC4.innerHTML = dias + " Días";
 	celda4.appendChild(spanC4);
@@ -66,9 +68,20 @@ function crearTarea(tarea){
 
 	var celda6 = document.createElement("td");
 	var buttonC6 = document.createElement("button");
+	buttonC6.setAttribute("data-task-id", tarea.id);
+	console.log(buttonC6);
+	buttonC6.classList.add("btnEstadoTarea");
+	console.log(buttonC6);
+	buttonC6.classList.add("btn");
 	dias <= 0
-		? buttonC6.setAttribute("class", "btn bg-olive")
-		: buttonC6.setAttribute("class", "btn btn-outline-warning");
+		? buttonC6.classList.add("bg-olive")
+		: buttonC6.classList.add("btn-outline-warning");
+
+	if (tarea.estado == "Pendiente" && dias <= 0) {
+		buttonC6.classList.remove("bg-olive");
+		buttonC6.classList.add("btn-danger");
+	}
+	console.log(tarea.estado);
 	buttonC6.innerHTML = tarea.estado;
 	celda6.appendChild(buttonC6);
 
@@ -83,7 +96,7 @@ function crearTarea(tarea){
 	tupla.appendChild(celda7);
 	return tupla;
 }
-function dataToModal(tarea){
+function dataToModal(tarea) {
 	document.querySelector("#txt_id_m").value = tarea.id;
 	document.querySelector("#txt_nombre_m").value = tarea.nombre;
 	document.querySelector("#txt_descripcion_m").value = tarea.descripcion;
@@ -93,9 +106,11 @@ function dataToModal(tarea){
 	let fechaCreacion = new Date(tarea.fechaCreacion);
 	let fechaCreacionISO = fechaCreacion.toISOString().substring(0, 10);
 	document.querySelector("#txt_fecha_reg").value = fechaCreacionISO;
-	document.querySelector("#btnActualizarTarea").setAttribute("data-btn-id", tarea.id);
+	document
+		.querySelector("#btnActualizarTarea")
+		.setAttribute("data-btn-id", tarea.id);
 }
-function cerrarModal(){
+function cerrarModal() {
 	document.querySelector("#txt_nombre_m").disabled = true;
 	document.querySelector("#txt_descripcion_m").disabled = true;
 	document.querySelector("#txt_fecha_fin_m").disabled = true;
@@ -107,27 +122,29 @@ function cerrarModal(){
 	document.querySelector("#btnModificarTarea").classList.remove("collapsed");
 	document.querySelector("#btnModificarTarea").hidden = false;
 	document.querySelector("#btnModificarTarea").disabled = false;
-};
+}
 function eliminarTarea() {
-    document.querySelectorAll(".btnEliminarTarea").forEach((btn) => {
-        btn.addEventListener("click", () => {
-            id = btn.getAttribute("data-task-id");
-            $.ajax({
-                url: "http://localhost:8080/task/" + id,
-                type: "DELETE",
-                contentType: "application/json",
-                async: true,
-                success: (response) => {
-                    response? notificacion("success","Tarea eliminada con éxito"): notificacion("error","Error al eliminar la tarea");
-                },
-                error: () => {
-                    alert("Error al eliminar la tarea");
-                },
-            });
-        });
-    });
-};
-function notificacion(icon,title){
+	document.querySelectorAll(".btnEliminarTarea").forEach((btn) => {
+		btn.addEventListener("click", () => {
+			id = btn.getAttribute("data-task-id");
+			$.ajax({
+				url: "http://localhost:8080/task/" + id,
+				type: "DELETE",
+				contentType: "application/json",
+				async: true,
+				success: (response) => {
+					response
+						? notificacion("success", "Tarea eliminada con éxito")
+						: notificacion("error", "Error al eliminar la tarea");
+				},
+				error: () => {
+					alert("Error al eliminar la tarea");
+				},
+			});
+		});
+	});
+}
+function notificacion(icon, title) {
 	Swal.fire({
 		position: "top-end",
 		icon,
@@ -139,5 +156,32 @@ function notificacion(icon,title){
 			toast.addEventListener("mouseenter", Swal.stopTimer);
 			toast.addEventListener("mouseleave", Swal.resumeTimer);
 		},
-	}).then(() => {location.reload();})
+	}).then(() => {
+		location.reload();
+	});
+}
+function cambiarEstadoTarea() {
+	document.querySelectorAll(".btnEstadoTarea").forEach((btn) => {
+		btn.addEventListener("click", () => {
+			id = btn.getAttribute("data-task-id");
+			btn.innerHTML == "Pendiente"
+				? (estado = "Finalizado")
+				: (estado = "Pendiente");
+			$.ajax({
+				url: "http://localhost:8080/task/" + id,
+				type: "PATCH",
+				contentType: "application/json",
+				async: true,
+				data: JSON.stringify({estado}),
+				success: (response) => {
+					response
+						? notificacion("success", "Tarea actualizada con éxito")
+						: notificacion("error", "Error al actualizar la tarea");
+				},
+				error: () => {
+					alert("Error al actualizar la tarea");
+				},
+			});
+		});
+	});
 }
