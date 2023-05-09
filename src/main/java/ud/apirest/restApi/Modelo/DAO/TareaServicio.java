@@ -1,4 +1,4 @@
-package ud.apirest.restApi.Servicios;
+package ud.apirest.restApi.Modelo.DAO;
 
 import java.util.ArrayList;
 import java.util.Optional;
@@ -6,13 +6,13 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import ud.apirest.restApi.Modelo.TareaDTO;
-import ud.apirest.restApi.Repository.InTarea;
+import ud.apirest.restApi.Modelo.DTO.TareaDTO;
+import ud.apirest.restApi.Repository.TareaIn;
 
 @Service
 public class TareaServicio {
     @Autowired
-    private InTarea tareaRepository;
+    private TareaIn tareaRepository;
     /**
      * @return las tareas en el repositorio, o en la base de datos
      */

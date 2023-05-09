@@ -18,8 +18,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import ud.apirest.restApi.Modelo.TareaDTO;
-import ud.apirest.restApi.Servicios.TareaServicio;
+import ud.apirest.restApi.Modelo.DAO.TareaServicio;
+import ud.apirest.restApi.Modelo.DTO.TareaDTO;
 
 @RestController
 @RequestMapping( value = "/task")

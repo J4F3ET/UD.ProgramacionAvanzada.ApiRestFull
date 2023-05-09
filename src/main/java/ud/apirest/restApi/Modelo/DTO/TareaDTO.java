@@ -1,4 +1,4 @@
-package ud.apirest.restApi.Modelo;
+package ud.apirest.restApi.Modelo.DTO;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
