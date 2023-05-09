@@ -1,12 +1,21 @@
 package ud.apirest.restApi.Modelo.DTO;
 
+import java.sql.Date;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-
+/**
+ * Clase que representa la tabla tarea en la base de datos
+ * Se usa la anotacion @Entity para indicar que es una entidad de la base de datos
+ * Se usa la anotacion @Table para indicar el nombre de la tabla en la base de datos
+ * Se usa la anotacion @Id para indicar que es la llave primaria de la tabla
+ * Se usa la anotacion @GeneratedValue para indicar que el valor de la llave primaria es autoincremental
+ * Se usa la anotacion @Column para indicar que es una columna de la tabla
+ */
 @Entity
 @Table(name = "tarea")
 public class TareaDTO {
@@ -20,14 +29,14 @@ public class TareaDTO {
     @Column
     private String estado;
     @Column
-    private String fechaCreacion;
+    private Date fechaCreacion;
     @Column
-    private String fechaFinalizacion;
+    private Date fechaFinalizacion;
     
 
     public TareaDTO() {
     }
-    public TareaDTO(long id, String nombre, String descripcion, String estado, String fechaCreacion, String fechaFinalizacion) {
+    public TareaDTO(long id, String nombre, String descripcion, String estado, Date fechaCreacion, Date fechaFinalizacion) {
         this.id = id;
         this.nombre = nombre;
         this.descripcion = descripcion;
@@ -59,16 +68,16 @@ public class TareaDTO {
     public void setEstado(String estado) {
         this.estado = estado;
     }
-    public String getFechaCreacion() {
+    public Date getFechaCreacion() {
         return fechaCreacion;
     }
-    public void setFechaCreacion(String fechaCreacion) {
+    public void setFechaCreacion(Date fechaCreacion) {
         this.fechaCreacion = fechaCreacion;
     }
-    public String getFechaFinalizacion() {
+    public Date getFechaFinalizacion() {
         return fechaFinalizacion;
     }
-    public void setFechaFinalizacion(String fechaFinalizacion) {
+    public void setFechaFinalizacion(Date fechaFinalizacion) {
         this.fechaFinalizacion = fechaFinalizacion;
     }
     @Override
@@ -76,43 +85,14 @@ public class TareaDTO {
         return "TareaDTO [descripcion=" + descripcion + ", estado=" + estado + ", fechaCreacion=" + fechaCreacion
                 + ", fechaFinalizacion=" + fechaFinalizacion + ", id=" + id + ", nombre=" + nombre + "]";
     }
+    
     @Override
     public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        TareaDTO other = (TareaDTO) obj;
-        if (descripcion == null) {
-            if (other.descripcion != null)
-                return false;
-        } else if (!descripcion.equals(other.descripcion))
-            return false;
-        if (estado == null) {
-            if (other.estado != null)
-                return false;
-        } else if (!estado.equals(other.estado))
-            return false;
-        if (fechaCreacion == null) {
-            if (other.fechaCreacion != null)
-                return false;
-        } else if (!fechaCreacion.equals(other.fechaCreacion))
-            return false;
-        if (fechaFinalizacion == null) {
-            if (other.fechaFinalizacion != null)
-                return false;
-        } else if (!fechaFinalizacion.equals(other.fechaFinalizacion))
-            return false;
-        if (id != other.id)
-            return false;
-        if (nombre == null) {
-            if (other.nombre != null)
-                return false;
-        } else if (!nombre.equals(other.nombre))
-            return false;
-        return true;
+        if(obj instanceof TareaDTO){
+            TareaDTO tarea = (TareaDTO) obj;
+            return this.id == tarea.getId();
+        }
+        return false;
     }
     
 }

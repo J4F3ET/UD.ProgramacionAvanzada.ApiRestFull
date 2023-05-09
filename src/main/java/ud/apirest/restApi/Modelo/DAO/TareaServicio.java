@@ -8,13 +8,18 @@ import org.springframework.stereotype.Service;
 
 import ud.apirest.restApi.Modelo.DTO.TareaDTO;
 import ud.apirest.restApi.Repository.TareaIn;
-
+/**
+ * Clase que contiene los metodos para acceder a la base de datos
+ * @Autowired: anotacion que permite inyectar la dependencia en la clase
+ * @Service: anotacion que indica que la clase es un servicio
+ */
 @Service
 public class TareaServicio {
     @Autowired
     private TareaIn tareaRepository;
     /**
      * @return las tareas en el repositorio, o en la base de datos
+     * Retorna todas las tareas en el repositorio, o en la base de datos
      */
     public ArrayList<TareaDTO> getTareas(){
         return (ArrayList<TareaDTO>) tareaRepository.findAll();
@@ -69,6 +74,7 @@ public class TareaServicio {
     /**
      * @param id el id de la tarea a eliminar
      * @return true si la tarea fue eliminada, false si no
+     * La funcion elimina la tarea con el id especificado, y retorna true si la tarea fue eliminada, false si no
      */
     public boolean deleteTareaById(long id){
         try{

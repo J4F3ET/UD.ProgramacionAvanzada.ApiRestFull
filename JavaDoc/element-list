@@ -1,0 +1,5 @@
+ud.apirest.restApi
+ud.apirest.restApi.Controlador
+ud.apirest.restApi.Modelo.DAO
+ud.apirest.restApi.Modelo.DTO
+ud.apirest.restApi.Repository
